@@ -9,11 +9,16 @@
 
     git clone https://github.com/JD579g/dsh-mcp-hub.git
     cd dsh-mcp-hub
-    node tests/platform.test.mjs      # 不需要装任何依赖，先确认环境
+    npm install                       # 只装一个 devDependency：官方 MCP SDK
+    node tests/platform.test.mjs      # 先确认环境（这个不需要任何依赖）
     npm test                          # 全量（约 1~3 分钟）
 
-本插件**没有任何运行时依赖**（只用 Node 内置模块），所以不需要 npm install。
-测试也是零依赖的：只有真装配测试会在找不到 DSH 宿主包时明确跳过。
+**运行时零依赖**（只用 Node 内置模块，SDK 由 DSH 提供）；
+唯一的 devDependency 是 `@modelcontextprotocol/sdk`，供握手/装配类测试使用。
+
+不装也能跑：需要 SDK 的测试会打印一行 JSON 后**明确跳过**（退出码 0），不会假装通过；
+真装配测试在没有 DSH 宿主包时同样跳过。CI 里设了 `MCP_HUB_REQUIRE_SDK=1`，
+所以「跳过」在 CI 上会变成硬失败 —— 防止回归被悄悄掩盖。
 
 ## 测试地图
 

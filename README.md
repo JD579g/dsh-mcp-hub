@@ -235,10 +235,15 @@ dsh.profile.bundles 与 dependencies（DSH_HOME 不是默认值时记得换路�
 
 ## 开发与测试
 
+**运行时零依赖**（只用 Node 内置模块；MCP SDK 由 DSH 自带）。唯一的 devDependency 是
+官方 `@modelcontextprotocol/sdk`，只给测试用：
+
+    npm install                            # 装测试依赖（CI 跑 npm ci）
+
     node scripts/pack-check.mjs            # 发布包自检：npm pack → 校验内容 → 从解出来的副本跑一遍
     node tests/platform.test.mjs           # 平台层（Windows 分支在 Linux 上也被覆盖）
     node tests/capabilities.test.mjs       # DSH 原生工具映射与去重（pwsh vs bash、手机专属能力）
-    node tests/installer.test.mjs          # install.ps1：静态约束 + 有 PowerShell 时真跑安装/卸载
+    node tests/installer.test.mjs          # install.ps1 / install.sh：静态约束 + 真跑安装与卸载
     node tests/client-smoke.mjs            # 极简 React 垫片跑浏览器半（含 6 项 Windows 断言）
     node tests/handshake.mjs               # 用官方 SDK 握手全部内置服务
     node tests/hub-query.test.mjs          # hub 查询信封 id 回归（真 MCP 客户端）
@@ -248,6 +253,13 @@ dsh.profile.bundles 与 dependencies（DSH_HOME 不是默认值时记得换路�
 
     npm test                               # 上面全部（不含 pack-check）
     npm run pack:check                     # 发布前必跑
+
+没装 SDK、或本机没有 DSH 时，受影响的测试会**明确打印跳过并退出 0**，不会假装通过；
+CI 里设了 `MCP_HUB_REQUIRE_SDK=1`，跳过即失败。
+
+CI 矩阵：**windows / ubuntu / macos × Node 20/22**，其中 Windows runner 会**真的执行
+`install.ps1`**（安装 + 卸载），macOS runner 会真的跑 `install.sh`（也就顺带守住了
+macOS 自带 bash 3.2 的兼容性）。
 
 发布（维护者）：
 

@@ -16,9 +16,10 @@
 import { promises as fs } from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import { loadSdk, importLib, SERVER_ENTRY } from './helpers.mjs'
+import { loadSdk, sdkOrSkip, importLib, SERVER_ENTRY } from './helpers.mjs'
 
 // SDK 与插件模块都从仓库自身位置解析，不写死安装路径。
+await sdkOrSkip('hub 查询队列回归测试')
 const { Client, StdioClientTransport } = await loadSdk()
 const { queryEnvelopeId } = await importLib('host', 'state.js')
 const ENTRY = SERVER_ENTRY

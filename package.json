@@ -36,6 +36,9 @@
   "engines": {
     "node": ">=20.0.0"
   },
+  "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0"
+  },
   "keywords": [
     "dsh",
     "dsh-plugin",

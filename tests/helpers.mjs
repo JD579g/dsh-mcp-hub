@@ -44,6 +44,29 @@ export function hasCommand(command) {
   return spawnSync(probe, args, { encoding: 'utf8' }).status === 0
 }
 
+/**
+ * 需要 SDK 的测试统一走这里：
+ *   - 本机装了 DSH 或 npm install 过 → 返回 SDK 目录，正常跑；
+ *   - 本机什么都没有 → 打印一行 JSON 后 **明确跳过**（退出 0），不假装通过；
+ *   - CI 里设了 MCP_HUB_REQUIRE_SDK=1 → 变成硬失败，防止"跳过"悄悄掩盖回归。
+ */
+export async function sdkOrSkip(label) {
+  const dir = await resolveSdkDir()
+  if (dir !== null) return dir
+  if (process.env.MCP_HUB_REQUIRE_SDK === '1') {
+    throw new Error(label + '：找不到 @modelcontextprotocol/sdk，但 MCP_HUB_REQUIRE_SDK=1。' +
+      'CI 应该先跑 npm install；本地请 npm i --no-save @modelcontextprotocol/sdk。')
+  }
+  console.log(JSON.stringify({
+    skipped: true,
+    test: label,
+    reason: '本机找不到 @modelcontextprotocol/sdk',
+    hint: 'npm i --no-save @modelcontextprotocol/sdk，或装一个 DSH，再跑本测试。',
+  }, null, 1))
+  console.log(label + ' 跳过（缺 MCP SDK）⏭')
+  process.exit(0)
+}
+
 /** 官方 MCP SDK 的目录（复用插件自己的解析器，找不到返回 null）。 */
 export async function resolveSdkDir() {
   const { resolveSdkDir: resolve } = await importLib('host', 'sdk.js')

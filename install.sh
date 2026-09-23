@@ -29,7 +29,7 @@ while [ "$#" -gt 0 ]; do
     -h|--help)
       sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'
       exit 0 ;;
-    *) echo "未知参数：$1（--help 看用法）" >&2; exit 2 ;;
+    *) echo "未知参数：${1}（--help 看用法）" >&2; exit 2 ;;
   esac
 done
 
@@ -41,7 +41,7 @@ if ! has node; then
 fi
 NODE_MAJOR="$(node -p 'process.versions.node.split(".")[0]')"
 if [ "$NODE_MAJOR" -lt 20 ]; then
-  echo "Node.js 版本过低：$NODE_MAJOR（要求 >= 20）" >&2
+  echo "Node.js 版本过低：${NODE_MAJOR}（要求 >= 20）" >&2
   exit 1
 fi
 
@@ -52,7 +52,7 @@ HELPER="$SRC/scripts/profile-manifest.mjs"
 
 if [ ! -f "$MANIFEST" ]; then
   echo "这个 profile 还没初始化过：$MANIFEST" >&2
-  echo "先启动一次：dsh --profile $PROFILE（或在 DSH 里用一次这个 profile），再重跑本脚本。" >&2
+  echo "先启动一次：dsh --profile ${PROFILE}（或在 DSH 里用一次这个 profile），再重跑本脚本。" >&2
   exit 1
 fi
 if [ ! -f "$HELPER" ]; then
@@ -112,5 +112,5 @@ echo "==> 对账 profile 清单（dsh.profile.bundles / dependencies）"
 node "$HELPER" --profile-dir "$PROFILE_DIR" --mode install --name "$NAME" --spec "$SPEC" >/dev/null
 echo "  OK  清单已对账"
 
-echo "装好了。下一步：重启一次 DSH（dsh web / dsh --profile $PROFILE），"
+echo "装好了。下一步：重启一次 DSH（dsh web / dsh --profile ${PROFILE}），"
 echo "然后打开 设置 → MCP 工具 → 体检。之后加/卸 MCP 服务都不用重启。"
