@@ -6,7 +6,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org)
 
-一个 **DSH 插件**（宿主 + 浏览器两半），面向**桌面开发者，Windows 优先**：
+一个 **DSH 插件**
+
+![dsh-mcp-hub 架构图](docs/architecture.svg)（宿主 + 浏览器两半），面向**桌面开发者，Windows 优先**：
 把「个人 MCP 服务」变成**设置页里点一下**的事，装完立刻挂载，**不用重启**。
 
 - **一键部署 GUI**：设置 → **MCP 工具**，常用场景点一下即装；搜索结果点「一键安装」。

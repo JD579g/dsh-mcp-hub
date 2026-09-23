@@ -45,6 +45,7 @@ const REQUIRED = [
   'package/scripts/publish-github.mjs',
   'package/tests/helpers.mjs',
   'package/docs/LAUNCH.md',
+  'package/docs/architecture.svg',
   'package/icon.svg',
   'package/locale/en.json',
   'package/locale/zh.json',

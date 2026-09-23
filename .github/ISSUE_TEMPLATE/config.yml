@@ -1,5 +1,14 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: 🔐 安全问题（不要开公开 issue）
+  - name: 💬 使用提问 / 想法讨论（Discussions）
+    url: https://github.com/JD579g/dsh-mcp-hub/discussions
+    about: 不确定是不是 bug、想问怎么用、想看别人怎么配，先来 Discussions 更快。
+  - name: 🔐 报告安全问题（不要开公开 issue）
     url: https://github.com/JD579g/dsh-mcp-hub/security/advisories/new
-    about: 涉及命令执行、路径逃逸、权限绕过等，请先看 SECURITY.md，走私密渠道。
+    about: 涉及命令执行、路径逃逸、权限绕过的漏洞，请走私密渠道。
+  - name: 🐞 Bug 反馈
+    url: https://github.com/JD579g/dsh-mcp-hub/issues/new?template=bug_report.yml
+    about: 结构化模板会逐项问版本、系统、体检报告与日志，信息齐了基本一次定位。
+  - name: ✨ 功能建议
+    url: https://github.com/JD579g/dsh-mcp-hub/issues/new?template=feature_request.yml
+    about: 先说场景再说方案。

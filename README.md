@@ -12,6 +12,8 @@
 Open **Settings → MCP Tools**, search an MCP server, click install. It is connected in the
 running harness immediately — no restart, no config file, no `npx.cmd` pain.
 
+![dsh-mcp-hub architecture](docs/architecture.svg)
+
 ---
 
 ## Install

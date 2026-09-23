@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-label="dsh-mcp-hub architecture">
+  <title>dsh-mcp-hub architecture</title>
+  <defs>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4d6bfe"/><stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <style>
+      .bg { fill: #0f1115; }
+      .box { fill: #171a21; stroke: #2a2f3a; stroke-width: 1.5; rx: 12; }
+      .hub { fill: url(#accent); rx: 14; }
+      .t { fill: #e8ebf1; font: 600 15px system-ui, sans-serif; }
+      .s { fill: #9aa4b5; font: 400 12.5px system-ui, sans-serif; }
+      .lbl { fill: #c7cfdb; font: 500 13px system-ui, sans-serif; }
+      .w { stroke: #3a4150; stroke-width: 1.6; fill: none; }
+    </style>
+  </defs>
+  <rect class="bg" width="960" height="420"/>
+  <text class="s" x="28" y="34">dsh-mcp-hub · host half + browser half, zero runtime dependencies</text>
+  <rect class="box" x="28" y="60" width="250" height="150"/>
+  <text class="t" x="48" y="92">DSH host (cordis)</text>
+  <text class="s" x="48" y="116">ctx.tools / ctx.commands / webServer</text>
+  <text class="s" x="48" y="138">7 built-in MCP servers as stdio</text>
+  <text class="s" x="48" y="160">permission gate · terminal · doctor</text>
+  <text class="s" x="48" y="188">registry: ~/.dsh/mcp-hub/servers.json</text>
+  <rect class="hub" x="360" y="112" width="180" height="66"/>
+  <text class="t" x="378" y="140" fill="#ffffff">dsh-mcp-hub</text>
+  <text class="s" x="378" y="162" fill="#e6e9ff">connect = register, no restart</text>
+  <rect class="box" x="622" y="60" width="310" height="46"/>
+  <text class="s" x="642" y="89">Settings → MCP Tools (browser half, web platform)</text>
+  <rect class="box" x="622" y="120" width="310" height="46"/>
+  <text class="s" x="642" y="149">Your MCP servers: npx / uvx / remote HTTP</text>
+  <rect class="box" x="622" y="180" width="310" height="46"/>
+  <text class="s" x="642" y="209">Registry search: official MCP Registry · npm · GitHub</text>
+  <path class="w" d="M278 135 H360"/>
+  <path class="w" d="M540 135 H622"/>
+  <path class="w" d="M540 145 C580 145 590 143 622 143"/>
+  <path class="w" d="M540 155 C580 155 590 203 622 203"/>
+  <text class="lbl" x="28" y="256">Cross-platform policy lives in lib/platform.js as pure functions with an injectable platform argument</text>
+  <rect class="box" x="28" y="272" width="288" height="118"/>
+  <text class="t" x="48" y="302">Windows</text>
+  <text class="s" x="48" y="326">pwsh → powershell → cmd</text>
+  <text class="s" x="48" y="348">PATHEXT-resolved npx.cmd</text>
+  <text class="s" x="48" y="370">winget hints · cmd /d /s /c</text>
+  <rect class="box" x="336" y="272" width="288" height="118"/>
+  <text class="t" x="356" y="302">macOS / Linux</text>
+  <text class="s" x="356" y="326">$SHELL → bash → zsh → sh</text>
+  <text class="s" x="356" y="348">os.tmpdir() aware roots</text>
+  <text class="s" x="356" y="370">read-only system dirs</text>
+  <rect class="box" x="644" y="272" width="288" height="118"/>
+  <text class="t" x="664" y="302">Android / DSHA (optional)</text>
+  <text class="s" x="664" y="326">device server: 17 tools</text>
+  <text class="s" x="664" y="348">feature-gated off on desktop</text>
+  <text class="s" x="664" y="370">same stdio protocol</text>
+</svg>
