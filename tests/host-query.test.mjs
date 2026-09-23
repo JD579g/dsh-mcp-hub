@@ -42,6 +42,8 @@ const fakeCtx = {
   },
 }
 
+const { sdkOrSkip } = await import('./helpers.mjs')
+await sdkOrSkip('宿主查询队列端到端测试')
 const { apply } = await import(new URL('../lib/index.js', import.meta.url).href)
 apply(fakeCtx, {
   dataDir: DATA_DIR,

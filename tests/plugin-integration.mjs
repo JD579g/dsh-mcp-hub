@@ -54,7 +54,9 @@ const fakeCtx = {
   },
 }
 
-const { importLib } = await import('./helpers.mjs')
+const { importLib, sdkOrSkip } = await import('./helpers.mjs')
+// 这个测试会真的把内置 MCP 服务拉起来，需要 SDK。
+await sdkOrSkip('插件集成测试（假 cordis 上下文）')
 const { apply } = await importLib('index.js')
 apply(fakeCtx, {
   dataDir: DATA_DIR,

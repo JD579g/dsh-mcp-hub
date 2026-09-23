@@ -13,6 +13,9 @@ jobs:
   test:
     name: ${{ matrix.os }} · Node ${{ matrix.node }}
     runs-on: ${{ matrix.os }}
+    # CI 里不允许"因为缺 SDK 所以跳过"——缺了就是硬失败（只有本地才允许跳过）
+    env:
+      MCP_HUB_REQUIRE_SDK: '1'
     strategy:
       fail-fast: false
       matrix:
@@ -27,6 +30,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: 安装测试依赖（官方 MCP SDK；运行时不需要，DSH 自带）
+        run: npm ci --no-audit --no-fund
 
       - name: 环境信息
         shell: bash

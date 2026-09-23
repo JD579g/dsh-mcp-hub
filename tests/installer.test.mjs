@@ -63,6 +63,15 @@ record('引用清单助手 scripts/profile-manifest.mjs', text.includes('profile
 record('没有绕过 DSH、直接写死全局安装路径',
   !text.includes('AppData') || text.includes("Join-Path (Join-Path $env:APPDATA 'npm') 'node_modules'"))
 
+// macOS 自带的是 bash 3.2：变量名后面紧跟多字节字符（中文全角括号等）时，
+// 它会把那个字符的第一个字节吞进变量名，set -u 于是报 "PROFILE?: unbound variable"。
+// 真实事故：install.sh 的收尾提示里写了 "$PROFILE）"，在 macOS runner 上直接退出码非 0。
+const shText = await fs.readFile(path.join(ROOT, 'install.sh'), 'utf8')
+const varThenNonAscii = /\$[A-Za-z_0-9][A-Za-z0-9_]*[^\x00-\x7f]/.exec(shText)
+record('install.sh：变量名后面不紧跟非 ASCII 字符（macOS bash 3.2 会把它吞进变量名）',
+  varThenNonAscii === null, varThenNonAscii === null ? '' : '发现：' + varThenNonAscii[0])
+record('install.sh：存在且可执行位合理', shText.includes('#!/usr/bin/env bash'))
+
 // ── 清单助手本身：install / uninstall / status 幂等 ─────────────────────────
 const helperDir = await fs.mkdtemp(path.join(os.tmpdir(), 'mcp-hub-helper-'))
 try {

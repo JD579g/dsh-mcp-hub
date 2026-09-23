@@ -5,9 +5,10 @@
  */
 import os from 'node:os'
 import path from 'node:path'
-import { loadSdk, SERVER_ENTRY } from './helpers.mjs'
+import { loadSdk, sdkOrSkip, SERVER_ENTRY } from './helpers.mjs'
 
-// SDK 用插件自己的解析器找（找不到会抛出可读错误），路径不写死。
+// SDK 用插件自己的解析器找；本机没有就明确跳过（CI 会先 npm install）。
+await sdkOrSkip('内置服务握手测试')
 const { Client, StdioClientTransport } = await loadSdk()
 const ENTRY = SERVER_ENTRY
 const targets = process.argv.slice(2)
