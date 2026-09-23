@@ -26,8 +26,9 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "node tests/platform.test.mjs && node tests/capabilities.test.mjs && node tests/installer.test.mjs && node tests/client-smoke.mjs && node tests/handshake.mjs && node tests/hub-query.test.mjs && node tests/host-query.test.mjs && node tests/plugin-integration.mjs && node tests/dsh-wiring.test.mjs",
+    "test": "node tests/hygiene.test.mjs && node tests/platform.test.mjs && node tests/capabilities.test.mjs && node tests/installer.test.mjs && node tests/client-smoke.mjs && node tests/handshake.mjs && node tests/hub-query.test.mjs && node tests/host-query.test.mjs && node tests/plugin-integration.mjs && node tests/dsh-wiring.test.mjs",
     "test:platform": "node tests/platform.test.mjs",
+    "test:hygiene": "node tests/hygiene.test.mjs",
     "test:capabilities": "node tests/capabilities.test.mjs",
     "test:installer": "node tests/installer.test.mjs",
     "test:wiring": "node tests/dsh-wiring.test.mjs",

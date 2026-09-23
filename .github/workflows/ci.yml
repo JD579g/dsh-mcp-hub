@@ -42,8 +42,8 @@ jobs:
           npm -v
           node -p "process.platform + ' / ' + process.arch"
 
-      - name: 平台层与能力映射单测
-        run: node tests/platform.test.mjs && node tests/capabilities.test.mjs
+      - name: 仓库卫生 + 平台层 + 能力映射
+        run: node tests/hygiene.test.mjs && node tests/platform.test.mjs && node tests/capabilities.test.mjs
 
       - name: 安装器（Windows 上会真跑 install.ps1）
         run: node tests/installer.test.mjs
