@@ -22,3 +22,7 @@ updates:
       day: monday
     commit-message:
       prefix: "chore(ci)"
+    # actions 的大版本（v4 → v7）会改变 runner 行为，人工评估后再升，不自动提 PR
+    ignore:
+      - dependency-name: "actions/*"
+        update-types: ["version-update:semver-major"]

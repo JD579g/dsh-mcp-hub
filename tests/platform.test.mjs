@@ -66,14 +66,20 @@ check('isDshaAndroid 只在安卓 DSHA 上为真（手机那套不打扰桌面�
 
 // ── 文件根目录与路径策略 ──────────────────────────────────────────────────
 check('默认根目录：Windows 只给家目录与 %TEMP%，不放开盘根', () => {
+  // 注意：不要断言"根目录恰好 2 个"。在真 Windows 上 os.tmpdir() 与注入的 tmp 可能
+  // 不是同一个字符串（例如 %TEMP% 与 %TMP% 不同），数量会多出来 —— CI 上就是这么炸的。
+  // 真正要守住的语义是：包含家目录与临时目录，且**绝不放整个盘根**。
   const win = defaultFsRoots('win32', 'C:/Users/dev', 'C:/Users/dev/AppData/Local/Temp')
-  equal(win.length, 2, 'win 根目录数')
-  equal(norm(win[0]), 'c:/users/dev')
-  assert(!win.some((item) => /^[A-Za-z]:\/?$/.test(norm(item))), '不应包含盘根：' + win.join(' , '))
+  const winNorm = win.map(norm)
+  assert(winNorm.includes('c:/users/dev'), 'win 要含家目录：' + win.join(' , '))
+  assert(winNorm.some((item) => item.includes('/temp') || item.includes('/tmp')), 'win 要含临时目录：' + win.join(' , '))
+  assert(!winNorm.some((item) => /^[a-z]:\/?$/.test(item)), 'win 不应包含盘根：' + win.join(' , '))
   const posix = defaultFsRoots('linux', '/home/dev', '/tmp')
-  equal(posix.length, 2)
-  equal(norm(posix[0]), '/home/dev')
-  return JSON.stringify(win)
+  const posixNorm = posix.map(norm)
+  equal(posixNorm[0], '/home/dev')
+  assert(posixNorm.includes('/tmp'), 'posix 要含 /tmp')
+  assert(!posixNorm.includes('/'), 'posix 不应包含根目录')
+  return JSON.stringify({ win, posix })
 })
 
 check('路径策略：Windows 按 %SystemRoot%/%ProgramFiles% 还原；POSIX 用固定表', () => {
