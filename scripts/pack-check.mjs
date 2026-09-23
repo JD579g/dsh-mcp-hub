@@ -41,10 +41,13 @@ const REQUIRED = [
   'package/install.sh',
   'package/scripts/profile-manifest.mjs',
   'package/scripts/pack-check.mjs',
-  'package/README.md',
+  'package/scripts/publish-npm.mjs',
+  'package/scripts/publish-github.mjs',
+  'package/tests/helpers.mjs',
   'package/CONTRIBUTING.md',
   'package/SECURITY.md',
   'package/LICENSE',
+  'package/README.md',
   // 测试要一起发出去：Windows 用户可以自己跑 node tests/platform.test.mjs 复核，
   // install.ps1 -Verify 也依赖它们。
   'package/tests/platform.test.mjs',

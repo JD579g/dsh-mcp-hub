@@ -1,5 +1,9 @@
 # dsh-mcp-hub —— DSH 的 MCP 与工具一键部署中枢
 
+[![CI](https://github.com/OWNER/dsh-mcp-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/dsh-mcp-hub/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org)
+
 一个 **DSH 插件**（宿主 + 浏览器两半），面向**桌面开发者，Windows 优先**：
 把「个人 MCP 服务」变成**设置页里点一下**的事，装完立刻挂载，**不用重启**。
 
@@ -245,10 +249,20 @@ dsh.profile.bundles 与 dependencies（DSH_HOME 不是默认值时记得换路�
     npm test                               # 上面全部（不含 pack-check）
     npm run pack:check                     # 发布前必跑
 
-发布：
+发布（维护者）：
 
-    npm pack                               # 产出 dsh-mcp-hub-<版本>.tgz
-    npm publish                            # 发布后可用 dsh plugin add dsh-mcp-hub
+    npm run pack:check                     # 发布包自检（pack → 校验内容 → 从解出来的副本再跑一遍）
+
+    # 上架 GitHub：建仓库 + 改提交作者为你 + 补仓库地址/徽章 + 推送 + 打印 CI 状态
+    GH_TOKEN=github_pat_xxx node scripts/publish-github.mjs --check   # 先只校验 token
+    GH_TOKEN=github_pat_xxx node scripts/publish-github.mjs
+
+    # 发 npm：dry-run 先看一眼要发什么，再真发
+    node scripts/publish-npm.mjs --dry-run
+    NPM_TOKEN=npm_xxx node scripts/publish-npm.mjs
+
+两个脚本都是幂等的：仓库已存在就复用，地址已补过就跳过；token 不会被打印，
+也不会留在 .git/config 或 .npmrc 里（临时文件用完即删）。
 
 ---
 
