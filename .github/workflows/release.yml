@@ -1,8 +1,10 @@
 name: Release
 
 # 打 tag 才发版：tag 必须等于 package.json 的版本（生态里的硬校验）。
-# npm 用 Trusted Publishing（OIDC），不需要 NPM_TOKEN ——
-# 但需要先在 npmjs.com 上给这个仓库 + 本 workflow 配好 trusted publisher。
+#
+# 顺序很重要：测试与打包用 runner 自带的 npm；**不要**在测试前全局升级 npm，
+# 否则 install.ps1 里那句 npm pack 会随 npm 大版本改变行为而失败（真踩过）。
+# 需要新 npm 的地方（Trusted Publishing 要求 >= 11.5）放到最后，用 npx 临时取。
 on:
   push:
     tags:
@@ -10,7 +12,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write     # 创建 GitHub Release
+  contents: write     # 创建/更新 GitHub Release
   id-token: write     # npm Trusted Publishing (OIDC)
 
 jobs:
@@ -24,9 +26,6 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
           cache: npm
-
-      - name: 升级 npm（Trusted Publishing 需要 npm >= 11.5）
-        run: npm install -g npm@latest
 
       - name: 校验 tag 与 package.json 版本一致
         run: |
@@ -47,16 +46,21 @@ jobs:
       - name: 发布包自检
         run: npm run pack:check
 
-      - name: npm publish（OIDC，带 provenance）
-        run: npm publish --access public --provenance
-
-      - name: 生成 tarball 并挂到 Release
+      - name: 打包并挂到 Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           npm pack
+          TARBALL=$(ls dsh-mcp-hub-*.tgz | head -1)
           if gh release view "${{ github.ref_name }}" >/dev/null 2>&1; then
-            gh release upload "${{ github.ref_name }}" dsh-mcp-hub-*.tgz --clobber
+            gh release upload "${{ github.ref_name }}" "$TARBALL" --clobber
           else
-            gh release create "${{ github.ref_name }}" --title "${{ github.ref_name }}" --notes-file CHANGELOG.md dsh-mcp-hub-*.tgz
+            gh release create "${{ github.ref_name }}" --title "${{ github.ref_name }}" --notes-file CHANGELOG.md "$TARBALL"
           fi
+
+      # 在 npmjs.com 上配好 Trusted Publisher（仓库 + 本 workflow）之后，
+      # 把仓库变量 NPM_PUBLISH_ENABLED 设为 true 即会自动发布；
+      # 没配之前这一步直接跳过，保证 Release 始终是绿的。
+      - name: npm publish（OIDC，带 provenance）
+        if: vars.NPM_PUBLISH_ENABLED == 'true'
+        run: npx --yes npm@11 publish --access public --provenance
