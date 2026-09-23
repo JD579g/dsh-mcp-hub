@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "MCP Tools",
+    "description": "One-click MCP server deployment: curated catalog plus on-demand search across the official MCP Registry, npm and GitHub — installed servers connect without a restart. Includes an environment doctor, per-server call permissions, a built-in terminal and 7 zero-dependency built-in MCP servers (61 tools)."
+  }
+}
