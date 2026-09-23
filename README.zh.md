@@ -332,7 +332,7 @@ winget install astral-sh.uv；也可以 /mcp doctor 看全量体检。
 | 角色 | 谁 | 负责什么 |
 |---|---|---|
 | 维护者 | [JD579g](https://github.com/JD579g) | 需求、判断、评审、发布与最终决定权 |
-| 共创（编码智能体） | **DSH agent（deepseek-flash）** | 与维护者结对起草实现、测试、CI 与文档 |
+| 共创（编码智能体） | <img src=".github/assets/deepseek.svg" width="16" alt="DeepSeek"> **DSH agent（deepseek-flash）** | 与维护者结对起草实现、测试、CI 与文档 |
 
 这个项目是在 **DSH** 里由维护者与编码智能体结对做出来的：智能体起草与实现，
 维护者判断、验证、拍板并发布。带 `Co-authored-by:` 尾注的提交记录了智能体参与的部分。
