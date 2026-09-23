@@ -103,8 +103,11 @@ async function callTool(name, args) {
 }
 
 if (registered.has('mcp__files__write') && registered.has('mcp__files__read')) {
-  await callTool('mcp__files__write', { path: '/tmp/mcp-hub-e2e.txt', content: 'e2e ok' })
-  report.toolCallText = (await callTool('mcp__files__read', { path: '/tmp/mcp-hub-e2e.txt' })).slice(0, 120)
+  // 必须用 os.tmpdir()：写死 /tmp 在 macOS 上是 /var/folders/...，在 Windows 上会变成
+  // 当前盘符下的 \tmp，两者都落在允许根目录之外 —— CI 上就是这么炸的。
+  const e2ePath = path.join(os.tmpdir(), 'mcp-hub-e2e.txt')
+  await callTool('mcp__files__write', { path: e2ePath, content: 'e2e ok' })
+  report.toolCallText = (await callTool('mcp__files__read', { path: e2ePath })).slice(0, 120)
 }
 
 // 变更队列：新增内置 device（走 catalog 名）、停用 kb、再删掉 device
