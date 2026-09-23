@@ -7,7 +7,7 @@
 
 ## 快速开始
 
-    git clone https://github.com/<owner>/dsh-mcp-hub.git
+    git clone https://github.com/JD579g/dsh-mcp-hub.git
     cd dsh-mcp-hub
     node tests/platform.test.mjs      # 不需要装任何依赖，先确认环境
     npm test                          # 全量（约 1~3 分钟）

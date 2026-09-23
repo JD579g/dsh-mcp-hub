@@ -1,6 +1,6 @@
 # dsh-mcp-hub —— DSH 的 MCP 与工具一键部署中枢
 
-[![CI](https://github.com/OWNER/dsh-mcp-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/dsh-mcp-hub/actions/workflows/ci.yml)
+[![CI](https://github.com/JD579g/dsh-mcp-hub/actions/workflows/ci.yml/badge.svg)](https://github.com/JD579g/dsh-mcp-hub/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org)
 
