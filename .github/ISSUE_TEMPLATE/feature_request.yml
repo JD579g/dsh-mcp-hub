@@ -1,0 +1,34 @@
+name: ✨ 功能建议
+description: 想要什么能力，或者觉得哪里别扭
+title: '[Feature] '
+labels: ['enhancement']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你想解决什么问题
+      description: 先说场景，再说方案——这样更容易找到更简单的做法。
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 你希望的方案
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 涉及哪一块
+      options:
+        - 安装 / 升级（install.ps1 / install.sh）
+        - 设置页界面
+        - 搜索与目录（Registry / npm / GitHub）
+        - 内置 MCP 工具包
+        - 权限与审批
+        - Windows 平台适配
+        - 其他
+    validations:
+      required: true
