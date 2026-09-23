@@ -48,6 +48,8 @@ const REQUIRED = [
   'package/SECURITY.md',
   'package/LICENSE',
   'package/README.md',
+  'package/CHANGELOG.md',
+  'package/CODE_OF_CONDUCT.md',
   // 测试要一起发出去：Windows 用户可以自己跑 node tests/platform.test.mjs 复核，
   // install.ps1 -Verify 也依赖它们。
   'package/tests/platform.test.mjs',

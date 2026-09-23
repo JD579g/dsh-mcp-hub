@@ -26,7 +26,14 @@ const calls = {
 
 const summary = []
 for (const server of servers) {
-  const transport = new StdioClientTransport({ command: process.execPath, args: [ENTRY, server], stderr: 'pipe' })
+  // 显式把宿主环境传下去：官方 SDK 默认会用 getDefaultEnvironment() 过滤掉 TMPDIR，
+  // 子进程里的 os.tmpdir() 就会和宿主不一致（macOS 上一个是 /var/folders 一个是 /tmp）。
+  const transport = new StdioClientTransport({
+    command: process.execPath,
+    args: [ENTRY, server],
+    stderr: 'pipe',
+    env: { ...process.env },
+  })
   const client = new Client({ name: 'dsh-mcp-hub-test', version: '1.0.0' })
   const row = { server, ok: false }
   try {

@@ -48,8 +48,11 @@ const manifest = JSON.parse(await fs.readFile(path.join(ROOT, 'package.json'), '
     const text = await fs.readFile(path.join(HERE, name), 'utf8')
     for (const line of text.split('\n')) {
       if (!line.includes("'/tmp/") && !line.includes('"/tmp/')) continue
-      // platform.test.mjs 里把 '/tmp' 当参数喂给 defaultFsRoots 是合法的 POSIX 夹具
+      // platform.test.mjs 里把 '/tmp' 当"被检测的字符串"喂给这些函数是合法夹具，
+      // 它们并不拿这个路径去读写文件。
       if (line.includes("defaultFsRoots('linux'")) continue
+      if (line.includes('isTempPath(')) continue
+      if (line.includes('tempRoots(')) continue
       offenders.push(name + ' → ' + line.trim())
     }
   }

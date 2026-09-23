@@ -16,6 +16,7 @@ const {
   defaultFsRoots, pathPolicy, underPrefix,
   commandShell, interactiveShells, denyPatterns, matchDeny,
   resolveExecutable, runnerStatus, shellToolName, shellToolInfo,
+  tempRoots, isTempPath,
 } = await import(libUrl('platform.js'))
 
 const results = []
@@ -118,6 +119,19 @@ check('交互终端候选：pwsh → Windows PowerShell → cmd.exe；POSIX 用 
   equal(posix[0].command, '/bin/zsh')
   assert(posix.every((item) => item.args.join(' ') === '-i'), 'POSIX 交互 shell 用 -i')
   return win.map((item) => item.label).join(' → ')
+})
+
+check('临时目录识别：macOS 的 /var/folders 与 POSIX 的 /tmp 都算临时（写策略要给它们开口子）', () => {
+  const darwinEnv = { TMPDIR: '/var/folders/36/xxxx/T' }
+  equal(isTempPath('/var/folders/36/xxxx/T/a.txt', 'darwin', darwinEnv), true, 'macOS 用户临时目录')
+  equal(isTempPath('/tmp/a.txt', 'darwin', darwinEnv), true, 'POSIX 惯例 /tmp')
+  equal(isTempPath('/etc/passwd', 'darwin', darwinEnv), false, '系统目录不算临时')
+  equal(isTempPath('C:/Users/dev/AppData/Local/Temp/a.txt', 'win32', { TEMP: 'C:\\Users\\dev\\AppData\\Local\\Temp' }), true, 'Windows %TEMP%')
+  equal(isTempPath('C:/Windows/system32/a.dll', 'win32', { TEMP: 'C:\\Users\\dev\\AppData\\Local\\Temp' }), false, 'Windows 系统目录不算临时')
+  const roots = defaultFsRoots('darwin', '/Users/dev', '/var/folders/36/xxxx/T')
+  assert(roots.some((item) => norm(item) === '/tmp'), '默认根目录要含 /tmp：' + roots.join(' , '))
+  assert(tempRoots('darwin', darwinEnv).includes('/var/folders/36/xxxx/T'), 'tempRoots 要含注入的 TMPDIR')
+  return roots.join(' , ')
 })
 
 check('DSH 命令执行工具名按平台：Windows 是 pwsh，其余是 bash', () => {
