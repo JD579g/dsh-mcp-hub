@@ -44,6 +44,7 @@ const REQUIRED = [
   'package/scripts/publish-npm.mjs',
   'package/scripts/publish-github.mjs',
   'package/tests/helpers.mjs',
+  'package/tests/fs-paths.test.mjs',
   'package/docs/LAUNCH.md',
   'package/docs/architecture.svg',
   'package/icon.svg',

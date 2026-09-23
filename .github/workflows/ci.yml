@@ -49,7 +49,7 @@ jobs:
         run: node tests/installer.test.mjs
 
       - name: 内置服务与插件装配
-        run: node tests/handshake.mjs && node tests/hub-query.test.mjs && node tests/host-query.test.mjs && node tests/plugin-integration.mjs && node tests/dsh-wiring.test.mjs
+        run: node tests/fs-paths.test.mjs && node tests/handshake.mjs && node tests/hub-query.test.mjs && node tests/host-query.test.mjs && node tests/plugin-integration.mjs && node tests/dsh-wiring.test.mjs
 
       - name: 浏览器半冒烟
         run: node tests/client-smoke.mjs
