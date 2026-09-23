@@ -1,0 +1,24 @@
+version: 2
+updates:
+  # 唯一的 devDependency：官方 MCP SDK
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      mcp-sdk:
+        patterns:
+          - "@modelcontextprotocol/*"
+
+  # 让 CI 里的 action 也别烂掉
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(ci)"

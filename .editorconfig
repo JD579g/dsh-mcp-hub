@@ -1,0 +1,21 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.ps1]
+# Windows PowerShell 5.1 读中文的前提是 UTF-8 带 BOM，
+# 所以 install.ps1 不要被编辑器"顺手"去掉 BOM（tests/installer.test.mjs 会断言这一点）。
+end_of_line = crlf
+insert_final_newline = true
+
+[*.{yml,yaml}]
+indent_size = 2

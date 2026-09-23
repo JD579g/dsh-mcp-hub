@@ -1,7 +1,7 @@
 name: 🐞 Bug 反馈
 description: 报告一个可复现的问题（安装、加载、工具、界面、平台差异都算）
 title: '[Bug] '
-labels: ['bug', 'needs-triage']
+labels: ['bug']
 body:
   - type: markdown
     attributes:
