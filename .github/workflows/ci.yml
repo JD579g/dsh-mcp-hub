@@ -1,0 +1,61 @@
+name: CI
+
+# 这个插件是**桌面优先、Windows 优先**的，所以 CI 必须在真 Windows 上跑：
+#   - install.ps1 会被 tests/installer.test.mjs 真的执行一遍（安装 + 卸载）；
+#   - 平台层单测在 win32 上原生跑一遍，而不是只跑注入的假 platform。
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · Node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        node: ['20', '22']
+        exclude:
+          - os: macos-latest
+            node: '22'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: 环境信息
+        shell: bash
+        run: |
+          node -v
+          npm -v
+          node -p "process.platform + ' / ' + process.arch"
+
+      - name: 平台层与能力映射单测
+        run: node tests/platform.test.mjs && node tests/capabilities.test.mjs
+
+      - name: 安装器（Windows 上会真跑 install.ps1）
+        run: node tests/installer.test.mjs
+
+      - name: 内置服务与插件装配
+        run: node tests/handshake.mjs && node tests/hub-query.test.mjs && node tests/host-query.test.mjs && node tests/plugin-integration.mjs && node tests/dsh-wiring.test.mjs
+
+      - name: 浏览器半冒烟
+        run: node tests/client-smoke.mjs
+
+      - name: 全量 npm test
+        run: npm test
+
+  pack:
+    name: 发布包自检
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm run pack:check

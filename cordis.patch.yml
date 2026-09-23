@@ -1,0 +1,7 @@
+# dsh-mcp-hub bundle patch: 一行 HOST 组合插件。
+# 它自己维护一份 MCP 服务注册表（~/.dsh/mcp-hub/servers.json），运行时直连
+# MCP 服务并把工具注册进 ctx.tools；内置服务作为子进程按需拉起。
+# 无模块级 inject：缺服务只会少做一件事，永远不会拖垮整棵 plugin tree。
+- insert:
+    - id: dsh-mcp-hub
+      name: 'dsh-mcp-hub'

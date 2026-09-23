@@ -1,0 +1,58 @@
+{
+  "name": "dsh-mcp-hub",
+  "version": "1.2.0",
+  "description": "DSH 的 MCP 与工具一键部署中枢（桌面优先 / Windows 友好）：设置页一键装机、在线智能搜索（官方 Registry/npm/GitHub）并与 DSH 原生工具去重、调用权限分级（询问/本会话/永久/禁用）、内置终端，以及 7 个零依赖内置 MCP 服务（61 个工具）",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./servers": "./lib/servers/main.js",
+    "./platform": "./lib/platform.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./client": "./lib/client.js"
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "tests",
+    "cordis.patch.yml",
+    "install.ps1",
+    "install.sh",
+    "README.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node tests/platform.test.mjs && node tests/capabilities.test.mjs && node tests/installer.test.mjs && node tests/client-smoke.mjs && node tests/handshake.mjs && node tests/hub-query.test.mjs && node tests/host-query.test.mjs && node tests/plugin-integration.mjs && node tests/dsh-wiring.test.mjs",
+    "test:platform": "node tests/platform.test.mjs",
+    "test:capabilities": "node tests/capabilities.test.mjs",
+    "test:installer": "node tests/installer.test.mjs",
+    "test:wiring": "node tests/dsh-wiring.test.mjs",
+    "pack:check": "node scripts/pack-check.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "mcp",
+    "model-context-protocol",
+    "tools",
+    "windows"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  }
+}
