@@ -28,6 +28,7 @@
     "README.md",
     "README.zh.md",
     "CHANGELOG.md",
+    "CONTRIBUTORS.md",
     "CONTRIBUTING.md",
     "SECURITY.md",
     "CODE_OF_CONDUCT.md",
@@ -75,6 +76,16 @@
     "url": "https://github.com/JD579g/dsh-mcp-hub/issues"
   },
   "homepage": "https://github.com/JD579g/dsh-mcp-hub#readme",
+  "contributors": [
+    {
+      "name": "JD579g",
+      "url": "https://github.com/JD579g"
+    },
+    {
+      "name": "DSH agent (deepseek-flash)",
+      "url": "https://github.com/JD579g/dsh-mcp-hub"
+    }
+  ],
   "author": {
     "name": "JD579g",
     "url": "https://github.com/JD579g"

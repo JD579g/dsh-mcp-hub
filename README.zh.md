@@ -327,6 +327,19 @@ winget install astral-sh.uv；也可以 /mcp doctor 看全量体检。
 - 安全问题：**不要开公开 issue**，见 [SECURITY.md](./SECURITY.md)
 - 想改代码：[CONTRIBUTING.md](./CONTRIBUTING.md)（含测试地图与「平台层必须可注入」的硬规矩）
 
+## 贡献者
+
+| 角色 | 谁 | 负责什么 |
+|---|---|---|
+| 维护者 | [JD579g](https://github.com/JD579g) | 需求、判断、评审、发布与最终决定权 |
+| 共创（编码智能体） | **DSH agent（deepseek-flash）** | 与维护者结对起草实现、测试、CI 与文档 |
+
+这个项目是在 **DSH** 里由维护者与编码智能体结对做出来的：智能体起草与实现，
+维护者判断、验证、拍板并发布。带 `Co-authored-by:` 尾注的提交记录了智能体参与的部分。
+
+**AI 不是免责理由** —— 提交 PR 的人仍要对正确性、许可证与安全性负责。
+详见 [CONTRIBUTORS.md](./CONTRIBUTORS.md)。
+
 ## 手机端（DSHA，可选）
 
 这个插件跑在 DSHA（Android 上的 DSH App）里同样可用，且会自动切换成手机视角：

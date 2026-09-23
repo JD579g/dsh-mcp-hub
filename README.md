@@ -159,6 +159,20 @@ needed: version, OS, Node version, the doctor report and the relevant `hub.log` 
 - [Suggest a feature](https://github.com/JD579g/dsh-mcp-hub/issues/new?template=feature_request.yml)
 - Security issues: please **do not** open a public issue — see [SECURITY.md](./SECURITY.md).
 
+## Contributors
+
+| Role | Who | What |
+|---|---|---|
+| Maintainer | [JD579g](https://github.com/JD579g) | requirements, review, releases, final say |
+| Co-creator (coding agent) | **DSH agent (deepseek-flash)** | drafted the implementation, tests, CI and docs in pairing with the maintainer |
+
+This project was built inside **DeepSeek Harness (DSH)** as a maintainer + coding-agent pairing:
+the agent drafts and implements, the maintainer decides, verifies and ships. Commits carrying a
+`Co-authored-by:` trailer record where the agent took part.
+
+AI is not a disclaimer — whoever opens a pull request is still responsible for correctness,
+licensing and security. See [CONTRIBUTORS.md](./CONTRIBUTORS.md).
+
 ## License
 
-[MIT](./LICENSE) · [Changelog](./CHANGELOG.md) · [Contributing](./CONTRIBUTING.md) · [Code of Conduct](./CODE_OF_CONDUCT.md)
+[MIT](./LICENSE) · [Changelog](./CHANGELOG.md) · [Contributing](./CONTRIBUTING.md) · [Code of Conduct](./CODE_OF_CONDUCT.md) · [Contributors](./CONTRIBUTORS.md)
