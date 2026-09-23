@@ -164,7 +164,7 @@ needed: version, OS, Node version, the doctor report and the relevant `hub.log` 
 | Role | Who | What |
 |---|---|---|
 | Maintainer | [JD579g](https://github.com/JD579g) | requirements, review, releases, final say |
-| Co-creator (coding agent) | <img src=".github/assets/deepseek.svg" width="16" alt="DeepSeek"> **DSH agent (deepseek-flash)** | drafted the implementation, tests, CI and docs in pairing with the maintainer |
+| Co-creator (coding agent) | **DSH agent (deepseek-flash)** | drafted the implementation, tests, CI and docs in pairing with the maintainer |
 
 This project was built inside **DeepSeek Harness (DSH)** as a maintainer + coding-agent pairing:
 the agent drafts and implements, the maintainer decides, verifies and ships. Commits carrying a
