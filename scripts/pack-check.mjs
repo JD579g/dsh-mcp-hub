@@ -44,10 +44,13 @@ const REQUIRED = [
   'package/scripts/publish-npm.mjs',
   'package/scripts/publish-github.mjs',
   'package/tests/helpers.mjs',
+  'package/docs/LAUNCH.md',
+  'package/docs/awesome-dsh-plugin-entry.yml',
   'package/CONTRIBUTING.md',
   'package/SECURITY.md',
   'package/LICENSE',
   'package/README.md',
+  'package/README.zh.md',
   'package/CHANGELOG.md',
   'package/CODE_OF_CONDUCT.md',
   // 测试要一起发出去：Windows 用户可以自己跑 node tests/platform.test.mjs 复核，

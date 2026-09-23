@@ -1,0 +1,26 @@
+# 交给 awesome-dsh-plugin 的条目文件
+#
+# 目标路径：data/plugins/JD579g__dsh-mcp-hub.yml
+# 提交前请确认（awesome 的 CI 会逐条校验）：
+#   1) 仓库根 package.json 里声明了 dsh.bundle.patch      —— 本仓库已满足；
+#   2) 仓库打上 GitHub topic: dsh-plugin                  —— 已满足；
+#   3) 仓库创建满 24 小时                                  —— 本仓库创建于 2026-09-23T12:45Z；
+#   4) description 与代码逐字相符，数字不要夸大             —— 下面的数字都能在仓库里核对；
+#   5) 只写 url / name / category / description，不要写 npm: 键（会被校验拒绝）。
+
+url: https://github.com/JD579g/dsh-mcp-hub
+name: JD579g/dsh-mcp-hub
+category: tools
+description:
+  en: >-
+    One-click MCP deployment for DSH: browse a curated catalog or search the official MCP
+    Registry, npm and GitHub on demand, then install a server without restarting the harness.
+    Ships an environment doctor, per-server call permissions (always / session / ask /
+    disabled), a built-in PowerShell-or-cmd terminal, and 7 zero-dependency built-in MCP
+    servers (61 tools) that also run as plain stdio servers in any MCP host. Windows-first:
+    PATHEXT-aware command resolution, platform-aware overlap warnings against DSH's own tools.
+  zh: >-
+    给 DSH 的 MCP 一键部署台：内置可装目录，也能按需搜索官方 MCP Registry、npm 与 GitHub，
+    装完立即挂载不用重启。自带环境体检、按服务设置的调用权限（永久 / 本会话 / 询问 / 禁用）、
+    内置 PowerShell 或 cmd 终端，以及 7 个零依赖内置 MCP 服务（61 个工具，同样可被任何 MCP
+    宿主直接启动）。Windows 优先：按 PATHEXT 解析命令，搜索时按平台提示与 DSH 原生工具的重叠。

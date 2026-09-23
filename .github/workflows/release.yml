@@ -1,0 +1,62 @@
+name: Release
+
+# 打 tag 才发版：tag 必须等于 package.json 的版本（生态里的硬校验）。
+# npm 用 Trusted Publishing（OIDC），不需要 NPM_TOKEN ——
+# 但需要先在 npmjs.com 上给这个仓库 + 本 workflow 配好 trusted publisher。
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write     # 创建 GitHub Release
+  id-token: write     # npm Trusted Publishing (OIDC)
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+
+      - name: 升级 npm（Trusted Publishing 需要 npm >= 11.5）
+        run: npm install -g npm@latest
+
+      - name: 校验 tag 与 package.json 版本一致
+        run: |
+          PKG=$(node -p "require('./package.json').version")
+          TAG=${{ github.ref_name }}
+          TAG=${TAG#v}
+          echo "package.json=$PKG  tag=$TAG"
+          [ "$PKG" = "$TAG" ] || { echo "::error::tag 与 package.json 版本不一致，先改好再发"; exit 1; }
+
+      - name: 安装测试依赖
+        run: npm ci --no-audit --no-fund
+
+      - name: 全量测试
+        env:
+          MCP_HUB_REQUIRE_SDK: '1'
+        run: npm test
+
+      - name: 发布包自检
+        run: npm run pack:check
+
+      - name: npm publish（OIDC，带 provenance）
+        run: npm publish --access public --provenance
+
+      - name: 生成 tarball 并挂到 Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          npm pack
+          if gh release view "${{ github.ref_name }}" >/dev/null 2>&1; then
+            gh release upload "${{ github.ref_name }}" dsh-mcp-hub-*.tgz --clobber
+          else
+            gh release create "${{ github.ref_name }}" --title "${{ github.ref_name }}" --notes-file CHANGELOG.md dsh-mcp-hub-*.tgz
+          fi
